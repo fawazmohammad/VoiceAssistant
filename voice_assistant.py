@@ -17,10 +17,10 @@ from pyautogui import click
 from keyboard import press
 from keyboard import write
 from time import sleep
-import threading
+from playsound import playsound
 
 chatStr = ''
-api_key = "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"
+api_key = "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"
 openai.api_key = api_key
 listener = sr.Recognizer()
 engine = pyttsx3.init('sapi5')
@@ -67,6 +67,8 @@ def tell_joke():
     joke = random.choice(jokes)
     print(joke)
     talk(joke)
+    crowd_laugh = "crowd_laughing.mp3"
+    playsound(crowd_laugh)
 
 def get_spoken_time():
     current_time = datetime.datetime.now()
@@ -144,7 +146,7 @@ def WafeeCall(name):
     sleep(4)
     click(x=254, y=120)
     sleep(1)
-    write('wafee')
+    write('wasif')
     sleep(1.5)
     click(x=270, y=193)
     sleep(1)
@@ -265,7 +267,8 @@ def run_jarvis():
             os.system("shutdown /r /t 0")
         elif 'tell me a joke' in command:
             print(f'You: {command}')
-            print(f'Jarvis: {tell_joke}')
+            print(f'Jarvis: {tell_joke()}')
+            playsound
         elif 'write' in command:
             print(f'You: {command}')
             wes = ai(prompt=command)
@@ -282,6 +285,11 @@ def run_jarvis():
             name = name.replace('jarvis' ,'')
             Name = str(name)
             WafeeCall(Name)
+        elif 'mute' in command:
+            print(f'You: {command}')
+            print('Jarvis: OK')
+            talk("Ok")
+            pyautogui.press('volumemute')
         elif 'hello' in command:
             chat(command)
 
