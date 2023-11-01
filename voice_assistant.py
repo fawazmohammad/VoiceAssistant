@@ -17,7 +17,6 @@ from pyautogui import click
 from keyboard import press
 from keyboard import write
 from time import sleep
-from playsound import playsound
 
 chatStr = ''
 api_key = "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"
@@ -67,8 +66,6 @@ def tell_joke():
     joke = random.choice(jokes)
     print(joke)
     talk(joke)
-    crowd_laugh = "crowd_laughing.mp3"
-    playsound(crowd_laugh)
 
 def get_spoken_time():
     current_time = datetime.datetime.now()
@@ -82,7 +79,6 @@ def search_google(query):
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
     search_results = soup.find_all('h3', class_='t')
-
     results = []
     for result in search_results:
         title = result.text
@@ -161,7 +157,6 @@ def respond_to_greetings(command):
 
     if any(greeting in command for greeting in greetings):
         response = "Hello! How can I assist you today?"
-
     elif any(question in command for question in well_being_questions):
         response = "I am doing well, how about you?"
     elif any(question in command for question in self_introduction):
@@ -171,6 +166,12 @@ def respond_to_greetings(command):
                     "I'm here to help. Just ask, and I'll do my best to provide you with the answers and support you need."
     return response
 
+def get_resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
 
 def run_jarvis():
     while True:
@@ -268,7 +269,6 @@ def run_jarvis():
         elif 'tell me a joke' in command:
             print(f'You: {command}')
             print(f'Jarvis: {tell_joke()}')
-            playsound
         elif 'write' in command:
             print(f'You: {command}')
             wes = ai(prompt=command)
